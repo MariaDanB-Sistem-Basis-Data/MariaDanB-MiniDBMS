@@ -20,3 +20,15 @@ Manual milestone integration (buat maintainer)
   git commit -m "chore(integration): update submodules to latest upstream (milestone X.Y)"
   git push origin main
 ```
+
+# How to Use
+Untuk sekadar menjalankan unit test, cukup jalankan `main.py`:
+```bash
+python main.py
+```
+
+Untuk menjalankan interactive shell, jalankan `main.py` dengan argumen `--interactive`:
+```bash
+python main.py --interactive
+```
+
