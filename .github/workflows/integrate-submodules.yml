@@ -1,0 +1,41 @@
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    name: Integrate submodules (milestone)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: config git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: buat fetch & update submodules ke upstream
+        run: |
+          git submodule foreach --recursive 'git fetch --all || true'
+          git submodule update --init --remote --recursive
+
+      - name: submodule status
+        run: git submodule status --recursive
+
+      - name: Commit & push updates
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "chore(integration): update submodules to latest upstream (milestone)"
+            git push origin HEAD:main
+            echo "Integration committed and pushed."
+          else
+            echo "No submodule updates to commit."
+          fi
