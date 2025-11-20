@@ -46,11 +46,11 @@ class MiniDBMS:
             self._log_with_failure_recovery(result)
             return result
 
-        # if query_type == self._query_type_enum.COMMIT:
-        #     return self._handle_transaction_completion(query, commit=True)
+        if query_type == self._query_type_enum.COMMIT:
+            return self._handle_transaction_completion(query, commit=True)
 
-        # if query_type in (self._query_type_enum.ABORT, self._query_type_enum.ROLLBACK):
-        #     return self._handle_transaction_completion(query, commit=False)
+        if query_type in (self._query_type_enum.ABORT, self._query_type_enum.ROLLBACK):
+            return self._handle_transaction_completion(query, commit=False)
 
         fallback = self.query_processor.execute_query(query)
         self._log_with_failure_recovery(fallback)
