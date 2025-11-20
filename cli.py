@@ -3,8 +3,8 @@ from __future__ import annotations
 import sys
 from typing import Iterable, Sequence
 
-from .bootstrap import Dependencies, load_dependencies
-from .MiniDBMS import MiniDBMS
+from bootstrap import Dependencies, load_dependencies
+from MiniDBMS import MiniDBMS
 
 
 def _print_execution_result(result, deps: Dependencies) -> None:
@@ -59,10 +59,10 @@ def _print_execution_result(result, deps: Dependencies) -> None:
 
 def _demo_queries() -> Iterable[str]:
     return [
-        "SELECT * FROM users;",
+        "SELECT * FROM Student;",
         "BEGIN TRANSACTION;",
-        "UPDATE users SET age = 29 WHERE name = 'Alice';",
-        "SELECT name, age FROM users WHERE city = 'Jakarta';",
+        "UPDATE Student SET GPA = 3.9 WHERE StudentID = 1;",
+        "SELECT StudentID, FullName, GPA FROM Student WHERE GPA > 3.0;",
         "COMMIT;",
         "ABORT;",
     ]
@@ -102,5 +102,9 @@ def _run_interactive(dbms: MiniDBMS, deps: Dependencies) -> None:
         if stripped.lower() in {"exit", "quit"}:
             break
 
-        result = dbms.execute(raw_query)
+        try:
+            result = dbms.execute(raw_query)
+        except Exception as exc:
+            print(f"[Error] {exc}")
+            continue
         _print_execution_result(result, deps)

@@ -7,7 +7,7 @@ from importlib import import_module
 from pathlib import Path
 from typing import Any, Callable
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent
 SUBMODULE_PATHS = [
     ROOT / "Query-Processor",
     ROOT / "Query-Processor" / "query_processor",
