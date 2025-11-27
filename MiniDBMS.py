@@ -10,7 +10,7 @@ from bootstrap import Dependencies
 class MiniDBMS:
     def __init__(self, deps: Dependencies) -> None:
         self._deps = deps
-        self.query_processor = deps.query_processor_cls()
+        self.query_processor = deps.query_processor_factory()
         self.concurrency_manager = deps.concurrency_control_cls()
         self.failure_recovery_manager = deps.failure_recovery_factory()
         self._rows_cls = deps.rows_cls
