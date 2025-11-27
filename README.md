@@ -22,6 +22,13 @@ Manual milestone integration (buat maintainer)
 ```
 
 # How to Use
+Jangan lupa inisialisasi database di `Query-Processor\storage_manager\storagemanager_helper\init.py` sebelum menjalankan program.
+```bash
+cd Query-Processor/storage_manager/storagemanager_helper
+python init.py
+cd ../../../         
+```
+
 Untuk sekadar menjalankan unit test, cukup jalankan `main.py`:
 ```bash
 python main.py
