@@ -86,12 +86,12 @@ def load_dependencies() -> Dependencies:
         )
 
     ConcurrencyControlManager = _import_attr(
-        "concurrency_control_manager.ConcurrencyControlManager",
+        "ConcurrencyControlManager",
         "ConcurrencyControlManager",
     )
 
     get_failure_recovery_manager = _import_attr(
-        "failure_recovery_manager.FailureRecovery",
+        "FailureRecovery",
         "getFailureRecoveryManager",
     )
 

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import re
+import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Optional
 
 from bootstrap import Dependencies
@@ -12,6 +14,21 @@ class MiniDBMS:
         self._deps = deps
         self.query_processor = deps.query_processor_factory()
         self.concurrency_manager = deps.concurrency_control_cls()
+        
+
+        # inisialisasi metode concurrency control, misal Two-Phase Locking
+        try:
+            import sys
+            from pathlib import Path
+            ccm_path = Path(__file__).parent / "Concurrency-Control-Manager"
+            if str(ccm_path) not in sys.path:
+                sys.path.insert(0, str(ccm_path))
+            
+            from ccm_methods.TwoPhaseLocking import TwoPhaseLocking  # type: ignore
+            self.concurrency_manager.set_method(TwoPhaseLocking())
+        except (ImportError, AttributeError):
+            pass  
+        
         self.failure_recovery_manager = deps.failure_recovery_factory()
         self._rows_cls = deps.rows_cls
         self._execution_result_cls = deps.execution_result_cls
